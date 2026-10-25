@@ -19,3 +19,36 @@ export const bros1602015Update = make(32, "75–76", bros160Rows);
 export const bros1602017Update = make(33, "77–78", bros160Rows.map(([id, tipo, comp, min, nom, max, unit, cond]) => id === 9018029 ? [id + 100, tipo, comp, "263", "", "316", unit, cond] : id === 9018030 ? [id + 100, tipo, comp, "", "82", "", unit, cond] : [id + 100, tipo, comp, min, nom, max, unit, cond]));
 
 export const bros1602018Update = make(34, "79–80", bros160Rows.map(([id, tipo, comp, min, nom, max, unit, cond]) => id === 9018029 ? [id + 200, tipo, comp, "263", "", "322", unit, cond] : id === 9018030 ? [id + 200, tipo, comp, "", "86", "", unit, cond] : id === 9018035 ? [id + 200, tipo, comp, "177,5", "180", "182,5", unit, "180 ± 2,5 ml por lado"] : [id + 200, tipo, comp, min, nom, max, unit, cond]));
+
+const pop110i2015 = make(39, "não informada", [
+  [9019001,"mec","Compressão do cilindro","","1363","","kPa","A 400 rpm"],
+  [9019002,"mec","Folga da válvula de admissão","0,08","0,10","0,12","mm","0,10 ± 0,02 mm"],
+  [9019003,"mec","Folga da válvula de escape","0,13","0,15","0,17","mm","0,15 ± 0,02 mm"],
+  [9019004,"ten","Estator — tensão em marcha lenta","20","","","V CA","Multímetro na escala de 200 V AC; mínimo"],
+  [9019005,"ten","Estator — tensão a 5.000 rpm","120","","","V CA","Multímetro na escala de 200 V AC; mínimo"],
+  [9019006,"res","Bobina de carga","0,5","","1,2","Ω","A 20 °C"],
+  [9019007,"cont","Fuga de corrente","0,003","","","mA","Material informa 0,003 mA como mínimo"],
+  [9019008,"ten","Bobina de ignição — pico","100","","","V","Mínimo"],
+  [9019009,"res","Ignição — primário","1,90","","3,60","Ω","A 20 °C"],
+  [9019010,"res","Ignição — secundário","8,0","","13,2","kΩ",""],
+  [9019011,"ten","CKP — pico","0,7","","","V","Mínimo"],
+  [9019012,"res","CKP — resistência","192","","288","Ω","A 20 °C"],
+  [9019013,"res","Cachimbo da vela","3,7","","6,2","kΩ","A 20 °C"],
+  [9019014,"res","EOT — 20 °C (7 piscadas)","2,5","","2,8","kΩ","A 20 °C"],
+  [9019015,"res","EOT — 100 °C (7 piscadas)","0,21","","0,23","kΩ","A 100 °C"],
+  [9019016,"ten","TPS — marcha lenta (8 piscadas)","0,29","","0,71","V","Marcha lenta"],
+  [9019017,"ten","TPS — totalmente aberta (8 piscadas)","4,13","","4,76","V","Borboleta totalmente aberta"],
+  [9019018,"res","Injetor — resistência (12 piscadas)","11","","13","Ω","Pressão indicada de 3,0 bar"],
+  [9019019,"mec","Injetor — vazão (12 piscadas)","","7","","ml","A 11.000 rpm"],
+  [9019020,"ten","Sonda lambda — tensão (21 piscadas)","100","","900","mV",""],
+  [9019021,"ten","Sensor de ângulo — horizontal (54 piscadas)","5,04","","7,19","V","Posição horizontal"],
+  [9019022,"ten","Sensor de ângulo — inclinação de 70° (54 piscadas)","0,40","","0,84","V","Inclinação de 70°"],
+  [9019023,"mec","Bomba — pressão em marcha lenta","","294","","kPa","2,94–3,00 bar"],
+  [9019024,"mec","Bomba — vazão mínima","","82","","cm³","Em 10 segundos"],
+  [9019025,"res","Sensor de nível — tanque cheio","195","","205","Ω","A 20 °C"],
+  [9019026,"res","Sensor de nível — tanque vazio","8","","12","Ω","A 20 °C"],
+  [9019027,"mec","Óleo 10W-30 SJ — drenagem","","0,8","","L","Observação: a partir de 07/2017"],
+  [9019028,"mec","Óleo 10W-30 SJ — desmontagem total","","1,0","","L","Observação: a partir de 07/2017"],
+  [9019029,"mec","Óleo da bengala 10W — por lado","","58","","ml","Cada lado"],
+]);
+export const pop110i2015Update = pop110i2015.map(r => ({ ...r, fonte: "Material informado pelo usuário", pagina: "não informada" }));
