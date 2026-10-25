@@ -1,111 +1,21 @@
 import type { TechnicalRecord } from "./types";
 
-const source = "PDF Parâmetros Honda e Yamaha";
+type Row = [number, TechnicalRecord["tipo"], string, string, string, string, string, string];
 const note = "Fonte informada pelo proprietário; confirmar no manual de serviço correspondente antes de usar como critério automático.";
-const record = (id: number, tipo: TechnicalRecord["tipo"], componente: string, minimo: string, nominal: string, maximo: string, unidade: string, condicoes: string, metodo = note): TechnicalRecord => ({ id, moto: 27, tipo, sistema: tipo === "mec" ? "elétrico geral" : tipo === "cont" ? "carga" : componente.includes("Injetor") || componente.includes("Bomba") ? "injeção" : componente.includes("Sensor") || componente.includes("TPS") || componente.includes("IAT") || componente.includes("EOT") || componente.includes("MAP") || componente.includes("Sonda") || componente.includes("IACV") ? "sensores/atuadores" : componente.includes("Estator") ? "carga" : "ignição", componente, minimo, nominal, maximo, unidade, condicoes, metodo, fonte: source, pagina: "65–66", status: "pendente", data: "24/10/2026" });
+const make = (moto: number, pagina: string, rows: Row[]): TechnicalRecord[] => rows.map(([id, tipo, componente, minimo, nominal, maximo, unidade, condicoes]) => ({ id, moto, tipo, sistema: tipo === "mec" ? "elétrico geral" : tipo === "cont" ? "carga" : componente.includes("Injetor") || componente.includes("Bomba") ? "injeção" : componente.includes("Sensor") || componente.includes("TPS") || componente.includes("IAT") || componente.includes("EOT") || componente.includes("MAP") || componente.includes("Sonda") || componente.includes("IACV") ? "sensores/atuadores" : componente.includes("Estator") ? "carga" : "ignição", componente, minimo, nominal, maximo, unidade, condicoes, metodo: note, fonte: "PDF Parâmetros Honda e Yamaha", pagina, status: "pendente", data: "24/10/2026" }));
 
-export const fan1502015Update: TechnicalRecord[] = [
-  record(9015001, "mec", "Compressão do cilindro", "", "1196", "", "kPa", "A 850 rpm"),
-  record(9015002, "mec", "Folga da válvula de admissão", "0,06", "0,08", "0,10", "mm", "0,08 ± 0,02 mm"),
-  record(9015003, "mec", "Folga da válvula de escape", "0,10", "0,12", "0,14", "mm", "0,12 ± 0,02 mm"),
-  record(9015004, "ten", "Estator — tensão alternada em marcha lenta", "20", "", "", "V CA", "Fios branco e verde; valor mínimo"),
-  record(9015005, "ten", "Estator — tensão alternada a 5.000 rpm", "120", "", "", "V CA", "Fios branco e verde; valor mínimo"),
-  record(9015006, "res", "Estator — resistência da bobina de carga", "0,2", "", "1,2", "Ω", "A 20 °C; fios branco e verde"),
-  record(9015007, "cont", "Estator — fuga de corrente", "", "", "0,1", "mA", "Valor máximo indicado"),
-  record(9015008, "ten", "Bobina de ignição — pico de tensão", "100", "", "", "V", "Valor mínimo"),
-  record(9015009, "res", "Bobina de ignição — enrolamento primário", "2,1", "", "5,2", "Ω", "A 20 °C"),
-  record(9015010, "res", "Bobina de ignição — enrolamento secundário", "7,8", "", "12,6", "kΩ", ""),
-  record(9015011, "ten", "Sensor CKP — pico de tensão", "0,7", "", "", "V", "Valor mínimo"),
-  record(9015012, "res", "Sensor CKP — resistência", "192", "", "288", "Ω", "A 20 °C"),
-  record(9015013, "res", "Cachimbo da vela — resistência", "3,7", "", "6,2", "kΩ", "A 20 °C"),
-  record(9015014, "ten", "Sensor MAP — saída (1 piscada)", "2,6", "", "3,2", "V", "Alimentação de 5 V"),
-  record(9015015, "res", "Sensor EOT — resistência a 20 °C (7 piscadas)", "2,5", "", "2,8", "kΩ", "A 20 °C"),
-  record(9015016, "res", "Sensor EOT — resistência a 100 °C (7 piscadas)", "0,21", "", "0,23", "kΩ", "A 100 °C"),
-  record(9015017, "ten", "Sensor TPS — tensão em marcha lenta (8 piscadas)", "0,29", "", "0,71", "V", "Marcha lenta"),
-  record(9015018, "ten", "Sensor TPS — tensão totalmente aberto (8 piscadas)", "4,13", "", "4,76", "V", "Borboleta totalmente aberta"),
-  record(9015019, "ten", "Sensor IAT — saída (9 piscadas)", "2,7", "", "3,1", "V", "Alimentação de 5 V"),
-  record(9015020, "res", "Sensor IAT — resistência (9 piscadas)", "1", "", "4", "kΩ", "A 20 °C"),
-  record(9015021, "res", "Injetor — resistência (12 piscadas)", "11", "", "13", "Ω", "A 20 °C; pressão indicada de 3,0 bar"),
-  record(9015022, "mec", "Injetor — teste de vazão (12 piscadas)", "", "14", "", "ml", "A 11.000 rpm; pressão indicada de 3,0 bar"),
-  record(9015023, "res", "Sonda lambda — resistência (21 piscadas)", "6", "", "12", "Ω", "A 20 °C"),
-  record(9015024, "ten", "Sonda lambda — tensão de saída (21 piscadas)", "100", "", "900", "mV", ""),
-  record(9015025, "res", "Válvula IACV — resistência (29 piscadas)", "110", "", "150", "Ω", "A 25 °C"),
-  record(9015026, "ten", "Sensor de ângulo — horizontal (54 piscadas)", "5,04", "", "7,19", "V", "Moto na horizontal"),
-  record(9015027, "ten", "Sensor de ângulo — inclinação de 70° (54 piscadas)", "0,40", "", "0,84", "V", "Inclinação de 70° ± 5°"),
-  record(9015028, "ten", "Sensor de velocidade — sinal de pulso", "", "0 / 5", "", "V", "Fio rosa positivo e terra negativo; pulsos entre 0 V e 5 V com a roda traseira girando"),
-  record(9015029, "mec", "Bomba de combustível — pressão em marcha lenta", "", "294", "", "kPa", "Equivalência indicada: 2,94–3,00 bar"),
-  record(9015030, "mec", "Bomba de combustível — vazão mínima", "", "120", "", "ml", "Em 10 segundos"),
-  record(9015031, "res", "Sensor de nível — tanque cheio", "7", "", "9", "Ω", "A 20 °C"),
-  record(9015032, "res", "Sensor de nível — tanque vazio", "267", "", "273", "Ω", "A 20 °C"),
-  record(9015033, "mec", "Óleo do motor 10W-30 SJ — capacidade na drenagem", "", "1,0", "", "L", "Na drenagem; observação do PDF: a partir de 07/2017"),
-  record(9015034, "mec", "Óleo do motor 10W-30 SJ — capacidade na desmontagem total", "", "1,2", "", "L", "Na desmontagem total; observação do PDF: a partir de 07/2017"),
-  record(9015035, "mec", "Óleo da bengala 10W — capacidade por lado", "", "139", "", "ml", "Por lado"),
-];
+export const fan1502015Update = make(27, "65–66", [
+[9015001,"mec","Compressão do cilindro","","1196","","kPa","A 850 rpm"],[9015002,"mec","Folga da válvula de admissão","0,06","0,08","0,10","mm","0,08 ± 0,02 mm"],[9015003,"mec","Folga da válvula de escape","0,10","0,12","0,14","mm","0,12 ± 0,02 mm"],[9015004,"ten","Estator — tensão alternada em marcha lenta","20","","","V CA","Fios branco e verde; valor mínimo"],[9015005,"ten","Estator — tensão alternada a 5.000 rpm","120","","","V CA","Fios branco e verde; valor mínimo"],[9015006,"res","Estator — resistência da bobina de carga","0,2","","1,2","Ω","A 20 °C"],[9015007,"cont","Estator — fuga de corrente","","","0,1","mA","Valor máximo indicado"],[9015008,"ten","Bobina de ignição — pico de tensão","100","","","V","Valor mínimo"],[9015009,"res","Bobina de ignição — primário","2,1","","5,2","Ω","A 20 °C"],[9015010,"res","Bobina de ignição — secundário","7,8","","12,6","kΩ",""],[9015011,"ten","Sensor CKP — pico de tensão","0,7","","","V","Valor mínimo"],[9015012,"res","Sensor CKP — resistência","192","","288","Ω","A 20 °C"],[9015013,"res","Cachimbo da vela — resistência","3,7","","6,2","kΩ","A 20 °C"],[9015014,"ten","Sensor MAP — saída (1 piscada)","2,6","","3,2","V","Alimentação de 5 V"],[9015015,"res","Sensor EOT — resistência a 20 °C (7 piscadas)","2,5","","2,8","kΩ","A 20 °C"],[9015016,"res","Sensor EOT — resistência a 100 °C (7 piscadas)","0,21","","0,23","kΩ","A 100 °C"],[9015017,"ten","Sensor TPS — tensão em marcha lenta (8 piscadas)","0,29","","0,71","V","Marcha lenta"],[9015018,"ten","Sensor TPS — tensão totalmente aberto (8 piscadas)","4,13","","4,76","V","Borboleta totalmente aberta"],[9015019,"ten","Sensor IAT — saída (9 piscadas)","2,7","","3,1","V","Alimentação de 5 V"],[9015020,"res","Sensor IAT — resistência (9 piscadas)","1","","4","kΩ","A 20 °C"],[9015021,"res","Injetor — resistência (12 piscadas)","11","","13","Ω","A 20 °C; pressão 3,0 bar"],[9015022,"mec","Injetor — vazão (12 piscadas)","","14","","ml","A 11.000 rpm; pressão 3,0 bar"],[9015023,"res","Sonda lambda — resistência (21 piscadas)","6","","12","Ω","A 20 °C"],[9015024,"ten","Sonda lambda — tensão (21 piscadas)","100","","900","mV",""],[9015025,"res","IACV — resistência (29 piscadas)","110","","150","Ω","A 25 °C"],[9015026,"ten","Sensor de ângulo — horizontal (54 piscadas)","5,04","","7,19","V","Horizontal"],[9015027,"ten","Sensor de ângulo — inclinação 70° (54 piscadas)","0,40","","0,84","V","70° ± 5°"],[9015028,"ten","Sensor de velocidade — sinal de pulso","","0 / 5","","V","Fio rosa positivo; roda traseira girando"],[9015029,"mec","Bomba — pressão em marcha lenta","","294","","kPa","2,94–3,00 bar"],[9015030,"mec","Bomba — vazão mínima","","120","","ml","Em 10 segundos"],[9015031,"res","Sensor de nível — tanque cheio","7","","9","Ω","A 20 °C"],[9015032,"res","Sensor de nível — tanque vazio","267","","273","Ω","A 20 °C"],[9015033,"mec","Óleo 10W-30 SJ — drenagem","","1,0","","L","A partir de 07/2017"],[9015034,"mec","Óleo 10W-30 SJ — desmontagem total","","1,2","","L","A partir de 07/2017"],[9015035,"mec","Óleo da bengala 10W — por lado","","139","","ml","Por lado"]]);
 
-const falcon = (...args: Parameters<typeof record>): TechnicalRecord => ({ ...record(...args), moto: 28, pagina: "67" });
+export const falcon4002013Update = make(28, "67", [
+[9016001,"mec","Compressão do cilindro","","814","","kPa","A 450 rpm"],[9016002,"mec","Folga admissão","0,08","0,10","0,12","mm","0,10 ± 0,02 mm"],[9016003,"mec","Folga escape","0,10","0,12","0,14","mm","0,12 ± 0,02 mm"],[9016004,"ten","Estator — marcha lenta","20","","","V CA","Fios amarelos; mínimo"],[9016005,"ten","Estator — 5.000 rpm","130","","","V CA","Fios amarelos; mínimo"],[9016006,"res","Bobina de carga","0,1","","1,0","Ω","A 20 °C"],[9016007,"cont","Fuga de corrente","","","0,1","mA","Máximo"],[9016008,"ten","Bobina de ignição — pico","100","","","V","Mínimo"],[9016009,"res","Bobina de ignição — primário","2,3","","3,5","Ω","A 20 °C"],[9016010,"res","Bobina de ignição — secundário","8,8","","13,7","kΩ",""],[9016011,"ten","CKP — pico","0,7","","","V","Mínimo"],[9016012,"res","CKP — resistência","","254","","Ω","Valor indicado; sem faixa"],[9016013,"res","Cachimbo da vela","3,7","","6,2","kΩ","A 20 °C"],[9016014,"ten","MAP — saída (1 piscada)","2,6","","3,2","V","Alimentação 5 V"],[9016015,"res","EOT — 20 °C (7 piscadas)","2,5","","2,8","kΩ","A 20 °C"],[9016016,"res","EOT — 100 °C (7 piscadas)","0,21","","0,23","kΩ","A 100 °C"],[9016017,"ten","TPS — lenta (8 piscadas)","0,29","","0,71","V","Marcha lenta"],[9016018,"ten","TPS — aberto (8 piscadas)","4,13","","4,71","V","Borboleta aberta"],[9016019,"ten","IAT — saída (9 piscadas)","4,75","","5,25","V",""],[9016020,"res","IAT — resistência (9 piscadas)","1,13","","1,88","kΩ","A 20 °C"],[9016021,"res","Injetor (12 piscadas)","11,6","","12,4","Ω","A 20 °C"],[9016022,"res","Sonda lambda — resistência (23 piscadas)","6","","10","Ω","A 20 °C"],[9016023,"ten","Sonda lambda — tensão (23 piscadas)","100","","900","mV",""],[9016024,"res","IACV (29 piscadas)","110","","150","Ω","A 25 °C"],[9016025,"ten","Ângulo — horizontal (54 piscadas)","5,04","","7,19","V","Horizontal"],[9016026,"ten","Ângulo — 70° (54 piscadas)","0,40","","0,84","V","70° ± 5°"],[9016027,"res","Solenoide PAIR","22","","26","Ω","A 20 °C"]]);
 
-export const falcon4002013Update: TechnicalRecord[] = [
-  falcon(9016001, "mec", "Compressão do cilindro", "", "814", "", "kPa", "A 450 rpm"),
-  falcon(9016002, "mec", "Folga da válvula de admissão", "0,08", "0,10", "0,12", "mm", "0,10 ± 0,02 mm"),
-  falcon(9016003, "mec", "Folga da válvula de escape", "0,10", "0,12", "0,14", "mm", "0,12 ± 0,02 mm"),
-  falcon(9016004, "ten", "Estator — tensão alternada em marcha lenta", "20", "", "", "V CA", "Entre os fios amarelos; valor mínimo"),
-  falcon(9016005, "ten", "Estator — tensão alternada a 5.000 rpm", "130", "", "", "V CA", "Entre os fios amarelos; valor mínimo"),
-  falcon(9016006, "res", "Estator — resistência da bobina de carga", "0,1", "", "1,0", "Ω", "A 20 °C; entre os fios amarelos"),
-  falcon(9016007, "cont", "Estator — fuga de corrente", "", "", "0,1", "mA", "Valor máximo indicado"),
-  falcon(9016008, "ten", "Bobina de ignição — pico de tensão", "100", "", "", "V", "Valor mínimo"),
-  falcon(9016009, "res", "Bobina de ignição — enrolamento primário", "2,3", "", "3,5", "Ω", "A 20 °C"),
-  falcon(9016010, "res", "Bobina de ignição — enrolamento secundário", "8,8", "", "13,7", "kΩ", ""),
-  falcon(9016011, "ten", "Sensor CKP — pico de tensão", "0,7", "", "", "V", "Valor mínimo"),
-  falcon(9016012, "res", "Sensor CKP — resistência", "", "254", "", "Ω", "Valor indicado; sem faixa mínima/máxima"),
-  falcon(9016013, "res", "Cachimbo da vela — resistência", "3,7", "", "6,2", "kΩ", "A 20 °C"),
-  falcon(9016014, "ten", "Sensor MAP — saída (1 piscada)", "2,6", "", "3,2", "V", "Alimentação de 5 V"),
-  falcon(9016015, "res", "Sensor EOT — resistência a 20 °C (7 piscadas)", "2,5", "", "2,8", "kΩ", "A 20 °C"),
-  falcon(9016016, "res", "Sensor EOT — resistência a 100 °C (7 piscadas)", "0,21", "", "0,23", "kΩ", "A 100 °C"),
-  falcon(9016017, "ten", "Sensor TPS — tensão em marcha lenta (8 piscadas)", "0,29", "", "0,71", "V", "Marcha lenta"),
-  falcon(9016018, "ten", "Sensor TPS — tensão totalmente aberto (8 piscadas)", "4,13", "", "4,71", "V", "Borboleta totalmente aberta"),
-  falcon(9016019, "ten", "Sensor IAT — saída (9 piscadas)", "4,75", "", "5,25", "V", ""),
-  falcon(9016020, "res", "Sensor IAT — resistência (9 piscadas)", "1,13", "", "1,88", "kΩ", "A 20 °C"),
-  falcon(9016021, "res", "Injetor — resistência (12 piscadas)", "11,6", "", "12,4", "Ω", "A 20 °C"),
-  falcon(9016022, "res", "Sonda lambda — resistência (23 piscadas)", "6", "", "10", "Ω", "A 20 °C"),
-  falcon(9016023, "ten", "Sonda lambda — tensão de saída (23 piscadas)", "100", "", "900", "mV", ""),
-  falcon(9016024, "res", "Válvula IACV — resistência (29 piscadas)", "110", "", "150", "Ω", "A 25 °C"),
-  falcon(9016025, "ten", "Sensor de ângulo — horizontal (54 piscadas)", "5,04", "", "7,19", "V", "Moto na horizontal"),
-  falcon(9016026, "ten", "Sensor de ângulo — inclinação de 70° (54 piscadas)", "0,40", "", "0,84", "V", "Inclinação de 70° ± 5°"),
-  falcon(9016027, "res", "Válvula solenoide PAIR", "22", "", "26", "Ω", "A 20 °C"),
-];
+export const bros1502009Update = make(29, "69–74", [
+[9017001,"mec","Compressão do cilindro","","1402","","kPa","A 1.000 rpm"],[9017002,"mec","Folga admissão","0,06","0,08","0,10","mm","0,08 ± 0,02 mm"],[9017003,"mec","Folga escape","0,10","0,12","0,14","mm","0,12 ± 0,02 mm"],[9017004,"ten","Estator — marcha lenta","20","","","V CA","Fios branco e verde"],[9017005,"ten","Estator — 5.000 rpm","120","","","V CA","Fios branco e verde"],[9017006,"res","Bobina de carga","0,2","","1,2","Ω","A 20 °C"],[9017007,"cont","Fuga de corrente","","","0,1","mA","Máximo"],[9017008,"ten","Bobina de ignição — pico","100","","","V","Mínimo"],[9017009,"res","Ignição — primário","2,1","","5,2","Ω",""],[9017010,"res","Ignição — secundário","7,8","","12,6","kΩ",""],[9017011,"ten","CKP — pico","0,7","","","V","Mínimo"],[9017012,"res","CKP — resistência","192","","288","Ω","A 20 °C"],[9017013,"res","Cachimbo da vela","3,7","","6,2","kΩ","A 20 °C"],[9017014,"ten","MAP (1 piscada)","2,6","","3,2","V","Alimentação 5 V"],[9017015,"res","EOT — 20 °C (7 piscadas)","2,5","","2,8","kΩ","A 20 °C"],[9017016,"res","EOT — 100 °C (7 piscadas)","0,21","","0,23","kΩ","A 100 °C"],[9017017,"ten","TPS — lenta (8 piscadas)","0,29","","0,71","V","Marcha lenta"],[9017018,"ten","TPS — aberta (8 piscadas)","4,13","","4,76","V","Borboleta aberta"],[9017019,"ten","IAT (9 piscadas)","2,7","","3,1","V","Alimentação 5 V"],[9017020,"res","Injetor (12 piscadas)","9","","12","Ω","Pressão 3,0 bar"],[9017021,"ten","Sonda lambda (21 piscadas)","100","","900","mV",""],[9017022,"res","IACV (29 piscadas)","110","","150","Ω","A 25 °C"],[9017023,"ten","Inclinação — horizontal (54 piscadas)","3,6","","4,4","V","Horizontal"],[9017024,"ten","Inclinação — 55° (54 piscadas)","0,7","","1,3","V","55°"],[9017025,"mec","Bomba — pressão em marcha lenta","","294","","kPa","2,94–3,00 bar"],[9017026,"mec","Bomba — vazão mínima","","100","","ml","Em 10 segundos"],[9017027,"res","Nível — tanque cheio","4","","10","Ω","A 20 °C"],[9017028,"res","Nível — tanque vazio","90","","100","Ω","A 20 °C"],[9017029,"mec","Óleo 10W-30 SJ — drenagem","","1,0","","L",""],[9017030,"mec","Óleo 10W-30 SJ — desmontagem total","","1,2","","L",""],[9017031,"mec","Óleo bengala 10W — por lado","","176","","ml","Por lado"]]);
 
-const bros2009 = (...args: Parameters<typeof record>): TechnicalRecord => ({ ...record(...args), moto: 29, pagina: "69–74" });
+const bros160Rows: Row[] = [
+[9018001,"mec","Compressão do cilindro","","1491","","kPa","15,2 kgf/cm²; a 850 rpm"],[9018002,"mec","Folga admissão","0,06","0,08","0,10","mm","0,08 ± 0,02 mm"],[9018003,"mec","Folga escape","0,22","0,24","0,26","mm","0,24 ± 0,02 mm"],[9018004,"ten","Estator — marcha lenta","20","","","V CA","Fios branco e verde"],[9018005,"ten","Estator — 5.000 rpm","120","","","V CA","Fios branco e verde"],[9018006,"res","Bobina de carga","0,2","","1,2","Ω","A 20 °C"],[9018007,"cont","Fuga de corrente","","","0,13","mA","Máximo"],[9018008,"ten","Bobina de ignição — pico","100","","","V","Mínimo"],[9018009,"res","Ignição — primário","1,8","","4,2","Ω","A 20 °C"],[9018010,"res","Ignição — secundário","7,8","","12,8","kΩ",""],[9018011,"ten","CKP — pico","0,7","","","V","Mínimo"],[9018012,"res","CKP — resistência","208","","288","Ω","A 20 °C"],[9018013,"res","Cachimbo da vela","3,7","","6,2","kΩ","A 20 °C"],[9018014,"ten","MAP (1 piscada)","2,6","","3,2","V","Alimentação 5 V"],[9018015,"res","EOT — 20 °C (7 piscadas)","2,5","","2,8","kΩ","A 20 °C"],[9018016,"res","EOT — 100 °C (7 piscadas)","0,21","","0,23","kΩ","A 100 °C"],[9018017,"ten","TPS — lenta (8 piscadas)","0,29","","0,71","V","Marcha lenta"],[9018018,"ten","TPS — aberta (8 piscadas)","4,13","","4,76","V","Borboleta aberta"],[9018019,"ten","IAT — saída (9 piscadas)","2,7","","3,1","V","Alimentação 5 V"],[9018020,"res","IAT — resistência (9 piscadas)","1","","4","kΩ","A 20 °C"],[9018021,"res","Injetor (12 piscadas)","11","","13","Ω","A 20 °C; pressão 3,0 bar"],[9018022,"mec","Injetor — vazão (12 piscadas)","","14","","ml","A 11.000 rpm"],[9018023,"res","Lambda — resistência (21 piscadas)","6,7","","9,5","Ω","A 20 °C"],[9018024,"ten","Lambda — tensão (21 piscadas)","100","","900","mV",""],[9018025,"res","IACV (29 piscadas)","110","","150","Ω","A 25 °C"],[9018026,"ten","Inclinação — horizontal (54 piscadas)","3,6","","4,4","V","Horizontal"],[9018027,"ten","Inclinação — 55° (54 piscadas)","0,7","","1,3","V","55° ± 5°"],[9018028,"ten","Velocidade — pulsos","","0 / 5","","V","Fio rosa positivo; roda traseira"],[9018029,"mec","Bomba — pressão em marcha lenta","","294","","kPa","3,0 kgf/cm²; 43 psi"],[9018030,"mec","Bomba — vazão mínima","","115","","ml","Em 10 segundos"],[9018031,"res","Nível — tanque cheio","7","","9","Ω","A 20 °C"],[9018032,"res","Nível — tanque vazio","267","","273","Ω","A 20 °C"],[9018033,"mec","Óleo 10W-30 SJ — drenagem","","1,0","","L","A partir de 07/2017"],[9018034,"mec","Óleo 10W-30 SJ — desmontagem total","","1,2","","L","A partir de 07/2017"],[9018035,"mec","Óleo bengala 10W — por lado","","176","","ml","Por lado"]];
+export const bros1602015Update = make(32, "75–76", bros160Rows);
+export const bros1602017Update = make(33, "77–78", bros160Rows.map(([id, tipo, comp, min, nom, max, unit, cond]) => [id + 100, tipo, comp, min, nom, max, unit, cond]));
 
-export const bros1502009Update: TechnicalRecord[] = [
-  bros2009(9017001, "mec", "Compressão do cilindro", "", "1402", "", "kPa", "A 1.000 rpm"),
-  bros2009(9017002, "mec", "Folga da válvula de admissão", "0,06", "0,08", "0,10", "mm", "0,08 ± 0,02 mm"),
-  bros2009(9017003, "mec", "Folga da válvula de escape", "0,10", "0,12", "0,14", "mm", "0,12 ± 0,02 mm"),
-  bros2009(9017004, "ten", "Estator — tensão alternada em marcha lenta", "20", "", "", "V CA", "Fios branco e verde; valor mínimo"),
-  bros2009(9017005, "ten", "Estator — tensão alternada a 5.000 rpm", "120", "", "", "V CA", "Fios branco e verde; valor mínimo"),
-  bros2009(9017006, "res", "Estator — resistência da bobina de carga", "0,2", "", "1,2", "Ω", "A 20 °C"),
-  bros2009(9017007, "cont", "Estator — fuga de corrente", "", "", "0,1", "mA", "Valor máximo indicado"),
-  bros2009(9017008, "ten", "Bobina de ignição — pico de tensão", "100", "", "", "V", "Valor mínimo"),
-  bros2009(9017009, "res", "Bobina de ignição — enrolamento primário", "2,1", "", "5,2", "Ω", ""),
-  bros2009(9017010, "res", "Bobina de ignição — enrolamento secundário", "7,8", "", "12,6", "kΩ", ""),
-  bros2009(9017011, "ten", "Sensor CKP — pico de tensão", "0,7", "", "", "V", "Valor mínimo"),
-  bros2009(9017012, "res", "Sensor CKP — resistência", "192", "", "288", "Ω", "A 20 °C"),
-  bros2009(9017013, "res", "Cachimbo da vela — resistência", "3,7", "", "6,2", "kΩ", "A 20 °C"),
-  bros2009(9017014, "ten", "Sensor MAP — saída (1 piscada)", "2,6", "", "3,2", "V", "Alimentação de 5 V"),
-  bros2009(9017015, "res", "Sensor EOT — resistência a 20 °C (7 piscadas)", "2,5", "", "2,8", "kΩ", "A 20 °C"),
-  bros2009(9017016, "res", "Sensor EOT — resistência a 100 °C (7 piscadas)", "0,21", "", "0,23", "kΩ", "A 100 °C"),
-  bros2009(9017017, "ten", "Sensor TPS — tensão em marcha lenta (8 piscadas)", "0,29", "", "0,71", "V", "Marcha lenta"),
-  bros2009(9017018, "ten", "Sensor TPS — tensão com borboleta aberta (8 piscadas)", "4,13", "", "4,76", "V", "Borboleta aberta"),
-  bros2009(9017019, "ten", "Sensor IAT — saída (9 piscadas)", "2,7", "", "3,1", "V", "Alimentação de 5 V"),
-  bros2009(9017020, "res", "Injetor — resistência (12 piscadas)", "9", "", "12", "Ω", "Pressão indicada de 3,0 bar"),
-  bros2009(9017021, "ten", "Sonda lambda — tensão de saída (21 piscadas)", "100", "", "900", "mV", ""),
-  bros2009(9017022, "res", "Válvula IACV — resistência (29 piscadas)", "110", "", "150", "Ω", "A 25 °C"),
-  bros2009(9017023, "ten", "Sensor de inclinação — horizontal (54 piscadas)", "3,6", "", "4,4", "V", "Moto na horizontal"),
-  bros2009(9017024, "ten", "Sensor de inclinação — inclinação de 55° (54 piscadas)", "0,7", "", "1,3", "V", "Inclinação de 55°"),
-  bros2009(9017025, "mec", "Bomba de combustível — pressão em marcha lenta", "", "294", "", "kPa", "Equivalência indicada: 2,94–3,00 bar"),
-  bros2009(9017026, "mec", "Bomba de combustível — vazão mínima", "", "100", "", "ml", "Em 10 segundos"),
-  bros2009(9017027, "res", "Sensor de nível — tanque cheio", "4", "", "10", "Ω", "A 20 °C"),
-  bros2009(9017028, "res", "Sensor de nível — tanque vazio", "90", "", "100", "Ω", "A 20 °C"),
-  bros2009(9017029, "mec", "Óleo do motor 10W-30 SJ — capacidade na drenagem", "", "1,0", "", "L", "Na drenagem"),
-  bros2009(9017030, "mec", "Óleo do motor 10W-30 SJ — capacidade na desmontagem total", "", "1,2", "", "L", "Na desmontagem total"),
-  bros2009(9017031, "mec", "Óleo da bengala 10W — capacidade por lado", "", "176", "", "ml", "Por lado"),
-];
+export const bros1602018Update = make(34, "79–80", bros160Rows.map(([id, tipo, comp, min, nom, max, unit, cond]) => [id + 200, tipo, comp, min, nom, max, unit, cond]));
