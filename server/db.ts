@@ -1,7 +1,8 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, organizationMembers, organizations, OrganizationMember, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
+import { createHash } from "node:crypto";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -89,4 +90,24 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+export async function ensurePersonalOrganization(userId: number, openId: string, displayName?: string | null) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const suffix = createHash("sha256").update(openId).digest("hex").slice(0, 16);
+  const slug = `oficina-${suffix}`;
+  const name = displayName?.trim() ? `Oficina de ${displayName.trim().slice(0, 120)}` : "Minha oficina MotoDiag";
+  await db.insert(organizations).values({ name, slug }).onDuplicateKeyUpdate({ set: { updatedAt: new Date() } });
+  const organization = (await db.select().from(organizations).where(eq(organizations.slug, slug)).limit(1))[0];
+  if (!organization) return undefined;
+  await db.insert(organizationMembers).values({ organizationId: organization.id, userId, role: "owner" }).onDuplicateKeyUpdate({ set: { updatedAt: new Date() } });
+  return organization;
+}
+
+export async function getMembership(userId: number, organizationId?: number): Promise<OrganizationMember | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  const query = organizationId
+    ? and(eq(organizationMembers.userId, userId), eq(organizationMembers.organizationId, organizationId))
+    : eq(organizationMembers.userId, userId);
+  return (await db.select().from(organizationMembers).where(query).limit(1))[0];
+}

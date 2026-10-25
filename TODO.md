@@ -1,12 +1,9 @@
-# MotoDiag — entregas
 
-- [x] **Catálogo de motos e navegação móvel** — O aplicativo permite pesquisar e filtrar versões Honda e Yamaha, mostra totais de versões, versões com dados e estados de validação, abre uma ficha por versão e mantém cada ano/versão independente, sem herdar parâmetros de outras versões.
-- [x] **Ficha técnica completa** — Cada ficha oferece Visão geral, Sintomas, Sistema elétrico, Resistências, Tensões, Carga, Partida, Ignição, Injeção, Sensores e atuadores, Pinagem, Códigos de falha, Mecânica e Histórico, com dados técnicos materializados em módulo versionado.
-- [x] **Dados e validação responsável** — Valores pendentes, em revisão, divergentes, desatualizados ou inativos permanecem identificados; registros não verificados não são tratados como especificação oficial e não podem aprovar ou reprovar uma medição. Lacunas permanecem como dados não confirmados.
-- [x] **Diagnóstico por sintomas** — O app contém a lista de sintomas do anexo, descrição livre, perguntas de triagem com respostas, hipóteses agrupadas, explicações e testes sugeridos; hipóteses são explicitamente não confirmadas; é possível ir ao multímetro e registrar no histórico.
-- [x] **Códigos de falha** — Exibe códigos por número de piscadas, identificadores e descrições, permite pesquisar e mostra o aviso de aplicabilidade por moto/ano e conferência no manual.
-- [x] **Multímetro** — Permite escolher moto e parâmetro, inserir medição decimal e comparar apenas faixas verificadas e completas, mostrando abaixo/acima/dentro, condição e limitações; faixa incompleta produz inconclusivo e nunca recomenda troca automática.
-- [x] **Histórico** — Registra moto, sintoma, descrição, observações, triagem, data/hora e resultado; lista e exclui registros com confirmação.
-- [x] **Administração** — Cadastra parâmetros e versões locais, permite editar/salvar pelo mesmo formulário, desativar/reativar e validar status; mantém campos técnicos, fonte/seção e histórico de alterações.
-- [x] **Persistência e evolução** — Persiste o trabalho localmente, insere apenas seeds novas sem sobrescrever edições, exibe falhas de armazenamento uma vez e separa dados, regras e repositório para futuras atualizações/sincronização.
-- [x] **Identidade e entrega** — Aplica identidade MotoDiag, ícones nativos e splash; mantém Expo/React Native/TypeScript/NativeWind, diagnóstico TypeScript, listeners 8081/3000 e código pronto para Preview e builds nativos pelo Dashboard.
+## Segurança e base SaaS
+
+- [x] **Acesso autenticado** — O catálogo e os fluxos de trabalho exigem uma sessão Manus OAuth válida; usuários não autenticados veem apenas a tela de login, sem usuário fictício ou bypass de desenvolvimento.
+- [x] **Sessão segura** — O Web usa cookie HttpOnly com `SameSite=None; Secure` no Preview HTTPS; o app nativo guarda o token somente em SecureStore; logout limpa cookie, token e dados de sessão apresentados.
+- [x] **Isolamento local** — Histórico, diagnósticos, parâmetros personalizados e auditoria local usam chave por usuário e nunca aparecem para outro usuário do mesmo aparelho.
+- [x] **Multiempresa e permissões** — O banco tem organizações e memberships com `owner`, `admin`, `technician` e `viewer`; o contexto e as procedures autenticadas não confiam em papel enviado pelo cliente.
+- [x] **Hardening HTTP** — A API aplica cabeçalhos defensivos, CORS restritivo, payload limitado, rate limiting básico em auth/OAuth e mensagens de erro sem segredos.
+- [ ] **Base para comercialização** — Separar catálogo técnico de dados privados e manter extensões para convites, sincronização, auditoria, assinatura, cobrança, exportação/backup e MFA/SSO.

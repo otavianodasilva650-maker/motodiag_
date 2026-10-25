@@ -8,16 +8,20 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { createCorsMiddleware } from "./cors";
 import { clearLegacySessionCookie } from "./cookies";
+import { authRateLimit, securityHeaders } from "./security";
 
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  app.disable("x-powered-by");
 
+  app.use(securityHeaders());
+  app.use(authRateLimit());
   app.use(createCorsMiddleware());
   app.use(clearLegacySessionCookie());
 
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(express.json({ limit: "2mb" }));
+  app.use(express.urlencoded({ limit: "2mb", extended: true }));
 
   registerStorageProxy(app);
   registerOAuthRoutes(app);

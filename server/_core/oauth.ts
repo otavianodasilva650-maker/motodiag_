@@ -1,6 +1,6 @@
 import { ONE_YEAR_MS } from "../../shared/const.js";
 import type { Express, Request, Response } from "express";
-import { getUserByOpenId, upsertUser } from "../db";
+import { ensurePersonalOrganization, getUserByOpenId, upsertUser } from "../db";
 import {
   getSessionCookieName,
   getSessionCookieOptions,
@@ -32,6 +32,7 @@ async function syncUser(userInfo: {
     lastSignedIn,
   });
   const saved = await getUserByOpenId(userInfo.openId);
+  if (saved?.id) await ensurePersonalOrganization(saved.id, userInfo.openId, saved.name ?? userInfo.name);
   return (
     saved ?? {
       openId: userInfo.openId,
