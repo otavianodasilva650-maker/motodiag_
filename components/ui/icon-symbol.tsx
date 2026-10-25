@@ -18,6 +18,10 @@ const MAPPING = {
   "paperplane.fill": "send",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
+  "bicycle": "two-wheeler",
+  "cross.case.fill": "medical-services",
+  "gauge.with.dots.needle.67percent": "speed",
+  "clock.arrow.circlepath": "history",
 } satisfies IconMapping;
 
 /**

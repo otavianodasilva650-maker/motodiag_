@@ -31,10 +31,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Início",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
+      <Tabs.Screen name="motos" options={{ title: "Motos", tabBarIcon: ({ color }) => <IconSymbol size={26} name="bicycle" color={color} /> }} />
+      <Tabs.Screen name="defeitos" options={{ title: "Defeitos", tabBarIcon: ({ color }) => <IconSymbol size={26} name="cross.case.fill" color={color} /> }} />
+      <Tabs.Screen name="multimetro" options={{ title: "Multímetro", tabBarIcon: ({ color }) => <IconSymbol size={26} name="gauge.with.dots.needle.67percent" color={color} /> }} />
+      <Tabs.Screen name="historico" options={{ title: "Histórico", tabBarIcon: ({ color }) => <IconSymbol size={26} name="clock.arrow.circlepath" color={color} /> }} />
+      <Tabs.Screen name="admin" options={{ href: null, title: "Admin" }} />
     </Tabs>
   );
 }
