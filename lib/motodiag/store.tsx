@@ -2,13 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Diagnosis, Motorcycle, Status, TechnicalRecord, motorcycles } from "./types";
 import { fullSeedRecords } from "./seed.generated";
-import { fan1502015Update, falcon4002013Update, bros1502009Update, bros1602015Update, bros1602017Update, bros1602018Update, pop110i2015Update, titan1502009Update, titan150Mix2009Update, titan1502011Update, titan1502014Update, titan1602016Update, titan1602018Update, titan1602022Update, titan1602025Update, xr300l2025Update, xre1902016Update, xre1902025Update, xre3002009Update, xre3002013Update, xre3002016Update, xre3002019Update } from "./user-updates";
+import { fan1502015Update, falcon4002013Update, bros1502009Update, bros1602015Update, bros1602017Update, bros1602018Update, pop110i2015Update, titan1502009Update, titan150Mix2009Update, titan1502011Update, titan1502014Update, titan1602016Update, titan1602018Update, titan1602022Update, titan1602025Update, xr300l2025Update, xre1902016Update, xre1902025Update, xre3002009Update, xre3002013Update, xre3002016Update, xre3002019Update, xre300Sahara2024Update } from "./user-updates";
 
 type Audit = { id: number; text: string; date: string };
 type State = { records: TechnicalRecord[]; diagnoses: Diagnosis[]; audit: Audit[]; customMotorcycles: Motorcycle[] };
 type ContextValue = State & { ready: boolean; allMotorcycles: Motorcycle[]; saveDiagnosis: (d: Omit<Diagnosis, "id" | "data">) => void; saveRecord: (r: TechnicalRecord) => void; setRecordStatus: (id: number, status: Status) => void; removeDiagnosis: (id: number) => void; addMotorcycle: (m: Omit<Motorcycle, "id" | "page">) => void };
 const KEY = "motodiag-v1";
-const bundledRecords = [...fullSeedRecords, ...fan1502015Update, ...falcon4002013Update, ...bros1502009Update, ...bros1602015Update, ...bros1602017Update, ...bros1602018Update, ...pop110i2015Update, ...titan1502009Update, ...titan150Mix2009Update, ...titan1502011Update, ...titan1502014Update, ...titan1602016Update, ...titan1602018Update, ...titan1602022Update, ...titan1602025Update, ...xr300l2025Update, ...xre1902016Update, ...xre1902025Update, ...xre3002009Update, ...xre3002013Update, ...xre3002016Update, ...xre3002019Update];
+const bundledRecords = [...fullSeedRecords, ...fan1502015Update, ...falcon4002013Update, ...bros1502009Update, ...bros1602015Update, ...bros1602017Update, ...bros1602018Update, ...pop110i2015Update, ...titan1502009Update, ...titan150Mix2009Update, ...titan1502011Update, ...titan1502014Update, ...titan1602016Update, ...titan1602018Update, ...titan1602022Update, ...titan1602025Update, ...xr300l2025Update, ...xre1902016Update, ...xre1902025Update, ...xre3002009Update, ...xre3002013Update, ...xre3002016Update, ...xre3002019Update, ...xre300Sahara2024Update];
 const initial: State = { records: bundledRecords, diagnoses: [], audit: [], customMotorcycles: [] };
 const StoreContext = createContext<ContextValue | null>(null);
 export function StoreProvider({ children }: { children: React.ReactNode }) {
