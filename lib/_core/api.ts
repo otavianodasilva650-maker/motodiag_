@@ -7,7 +7,9 @@ type ApiResponse<T> = {
   error?: string;
 };
 
-export async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+type ApiOptions = RequestInit & { suppressErrorLog?: boolean };
+
+export async function apiCall<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...((options.headers as Record<string, string>) || {}),
@@ -44,7 +46,7 @@ export async function apiCall<T>(endpoint: string, options: RequestInit = {}): P
     console.log("[API] Response received");
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("[API] Error response received");
+      if (!options.suppressErrorLog) console.error("[API] Error response received");
       let errorMessage = errorText;
       try {
         const errorJson = JSON.parse(errorText);
@@ -66,7 +68,7 @@ export async function apiCall<T>(endpoint: string, options: RequestInit = {}): P
     console.log("[API] Text response received");
     return (text ? JSON.parse(text) : {}) as T;
   } catch (error) {
-    console.error("[API] Request failed");
+    if (!options.suppressErrorLog) console.error("[API] Request failed");
     if (error instanceof Error) {
       throw error;
     }
@@ -114,10 +116,10 @@ export async function getMe(): Promise<{
   lastSignedIn: string;
 } | null> {
   try {
-    const result = await apiCall<{ user: any }>("/api/auth/me");
+    const result = await apiCall<{ user: any }>("/api/auth/me", { suppressErrorLog: true });
     return result.user || null;
   } catch {
-    console.error("[API] getMe failed");
+    // A sessão ausente é o estado normal antes do OAuth; o AuthGate mostra o login.
     return null;
   }
 }

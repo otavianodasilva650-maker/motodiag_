@@ -9,7 +9,7 @@ export default function Root({ children }: { children: ReactNode }) {
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <style dangerouslySetInnerHTML={{ __html: "html, body, #root { min-height: 100%; } body { margin: 0; overflow: auto; } #root { min-height: 100vh; }" }} />
+        <style dangerouslySetInnerHTML={{ __html: "html, body, #root { height: 100%; min-height: 100%; } body { margin: 0; overflow: auto; } #root { display: flex; min-height: 100vh; height: 100vh; }" }} />
         {headNodes}
       </head>
       <body {...bodyAttributes}>
